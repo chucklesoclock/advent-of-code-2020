@@ -1,6 +1,6 @@
-data = '''''' # provided input data goes here
+with open('data.txt') as f:
+    data = list({int(x.strip()) for x in f.readlines()})
 
-data = list({int(x.strip()) for x in data.split('\n')})
 
 def find_solution1(data, total):
     for i, x in enumerate(data[:-1]):
@@ -10,6 +10,7 @@ def find_solution1(data, total):
     else:
         return None
 
+
 def find_solution2(data):
     for i, n in enumerate(data[:-2]):
         add_result = find_solution1(data[i+1:], 2020-n)
@@ -17,6 +18,7 @@ def find_solution2(data):
             return n * add_result
     else:
         return None
+
 
 print(find_solution1(data, 2020))
 print(find_solution2(data))
