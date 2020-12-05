@@ -1,6 +1,6 @@
 import math
 
-with open('data.txt') as f:
+with open('input/data03.txt') as f:
     data = [x.rstrip() for x in f.readlines()]
 
 

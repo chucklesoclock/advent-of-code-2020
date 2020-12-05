@@ -1,4 +1,4 @@
-with open('data.txt') as f:
+with open('input/data01.txt') as f:
     data = list({int(x.strip()) for x in f.readlines()})
 
 

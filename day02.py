@@ -29,7 +29,7 @@ def process_line(line):
 
 @timethis
 def main():
-    with open('data.txt') as f:
+    with open('input/data02.txt') as f:
         n_valid_part_1 = n_valid_part_2 = 0
         for line in f:
             a, b, keychar, password = process_line(line)
