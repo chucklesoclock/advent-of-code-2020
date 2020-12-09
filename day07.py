@@ -39,7 +39,7 @@ def part2():
         d[k] = vd
 
     def count_bags(bag):
-        sub_bags = d[bag] 
+        sub_bags = d[bag]
         if not sub_bags:
             return 0
         else:
