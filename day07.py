@@ -27,8 +27,8 @@ def part2():
     for line in data:
         k, v = line.split(' contain ')
         k = k[:-len(' bags')]
-        v = [''.join(ch for ch in x.replace('bags', 'bag').replace(
-            ' bag', '')).strip() for x in v.rstrip('.').split(', ')]
+        v = [x.replace('bags', 'bag').replace(' bag', '')
+             for x in v.rstrip('.').split(', ')]
         if v[0] == 'no other':
             vd = dict()
         else:
