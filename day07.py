@@ -1,5 +1,6 @@
 with open('input/data07.txt') as f:
     data = f.read().splitlines()
+# 'shiny cyan bags contain 4 plaid green bags, 4 dim coral bags, 4 dull indigo bags.'
 
 
 def part1():
