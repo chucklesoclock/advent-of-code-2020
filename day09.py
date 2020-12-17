@@ -5,39 +5,70 @@ with open("input/data09.txt") as f:
 
 preamble = 25
 
-for i in range(preamble, len(data)):
-    window = data[i - preamble : i]
-    n = data[i]
-    # recalculating all the sums is inefficient
-    # i should only have to drop and add n=preamble-1 sums
-    if n not in (sum(tup) for tup in itertools.combinations(window, 2)):
-        invalid = n
-        print(n)
-        break
-else:
-    raise Exception("all numbers are sum of 2 numbers in preamble")
 
-d = [(i, x) for i, x in enumerate(data) if x < invalid]
-# this errors
-sub_sequences = []
-for i in reversed(range(1, len(d))):
-    data_idx = d[i][0]
-    previous_data_idx = d[i - 1][0]
-    out_of_sequence_with_previous = data_idx - 1 != previous_data_idx
-    if i == len(d) - 1 and out_of_sequence_with_previous:
-        print(f"idx = {data_idx: >3} deleted")
-        del d[i]
+def part1(data=data, preamble=preamble):
+    for i in range(preamble, len(data)):
+        window = data[i - preamble : i]
+        n = data[i]
+        # recalculating all the sums is inefficient
+        # i should only have to drop and add n=preamble-1 sums
+        if n not in (sum(tup) for tup in itertools.combinations(window, 2)):
+            return n
     else:
-        out_of_sequence_with_next = data_idx + 1 != d[i + 1][0]
-        if out_of_sequence_with_previous:
-            if out_of_sequence_with_next:
-                print(f"idx = {data_idx: >3} deleted")
-                del [i]
-            else:
-                sub_sequences.append(d[-i:])
-                print(f"append d[{-i}:{len(d)-1}]")
-                del d[i:]
-else:
-    sub_sequences.append(d[0:])
-    del d[0:]
+        raise Exception("all numbers are sum of 2 numbers in preamble")
 
+
+def part2(target, data=data):
+    for i in range(len(data) - 1):
+        window_sum = data[i]
+        if window_sum > target:
+            continue
+        for j in range(i+1, len(data)):
+            window_sum += data[j]
+            if window_sum == target:
+                winning_window = data[i : j + 1]
+                return min(winning_window) + max(winning_window)
+            elif window_sum > target:
+                break
+        else:
+            assert window_sum < target
+    else:
+        return None
+
+
+if __name__ == "__main__":
+    first_invalid = part1()
+    print(first_invalid)
+    print(part2(first_invalid))
+
+sample_input = [
+    int(x)
+    for x in """35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576""".splitlines()
+]
+
+
+def test_sample_part_1():
+    assert part1(sample_input, 5) == 127
+
+
+def test_sample_part_2():
+    assert part2(127, sample_input) == 62
