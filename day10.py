@@ -52,7 +52,6 @@ def part2(data):
         n += 1
     return num_paths
 
-
 if __name__ == "__main__":
     with open("input/data10.txt") as f:
         data = parse(f.read())
