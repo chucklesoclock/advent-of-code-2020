@@ -1,5 +1,4 @@
 from collections import Counter
-from scipy.sparse import coo_matrix
 import numpy as np
 
 
@@ -51,6 +50,7 @@ def part2(data):
         num_paths += acc[outlet_to_device]
         n += 1
     return num_paths
+
 
 if __name__ == "__main__":
     with open("input/data10.txt") as f:
