@@ -1,18 +1,6 @@
-sample_layout = """L.LL.LL.LL
-LLLLLLL.LL
-L.L.L..L..
-LLLL.LL.LL
-L.LL.LL.LL
-L.LLLLL.LL
-..L.L.....
-LLLLLLLLLL
-L.LLLLLL.L
-L.LLLLL.LL"""
-
-
 class Ferry:
     def __init__(self, layout):
-        grid = [list(r) for r in sample_layout.splitlines()]
+        grid = [list(r) for r in layout.splitlines()]
         self.seat_list = []
         for r, row in enumerate(grid):
             for c, char in enumerate(row):
@@ -58,11 +46,11 @@ class Ferry:
 
     def start_chaos(self):
         while True:                         # infinite loop, ho!
-            ferry.calculate_update_all_seats()
-            if ferry.seats_stable:
+            self.calculate_update_all_seats()
+            if self.seats_stable:
                 return self
             else:
-                ferry.do_update_all_seats()
+                self.do_update_all_seats()
 
     def count_occupied(self):
         return sum(1 for s in self.seat_list if s.state == '#')
@@ -98,8 +86,30 @@ class Seat:
         self.next_state = None
         self.will_change = None
 
+if __name__ == "__main__":
+    sample_layout = """L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL"""
+    ferry = Ferry(sample_layout)
+    num_occupied = ferry.start_chaos().count_occupied()
+    print(num_occupied)
 
-ferry = Ferry(sample_layout)
-num_occupied = ferry.start_chaos().count_occupied()
-
-print(f'After stablization, the number of occupied seats is:\n>>> {num_occupied}')
+def test_part_1_sample():
+    sample_layout = """L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL"""
+    assert Ferry(sample_layout).start_chaos().count_occupied() == 37
