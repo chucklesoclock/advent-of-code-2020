@@ -35,34 +35,25 @@ def part2(data):
     waypoint = [10, 1]
     position = [0, 0]
     for action, num in data:
-        match action:
-            case "N":
+        match (action, num):
+            case ("N", _):
                 waypoint[1] += num
-            case "S":
+            case ("S", _):
                 waypoint[1] -= num
-            case "E":
+            case ("E", _):
                 waypoint[0] += num
-            case "W":
+            case ("W", _):
                 waypoint[0] -= num
-            case "R":
+            case ("R", 90) | ("L", 270):
                 # rotate waypoint around ship clockwise
-                match num:
-                    case 90:
-                        waypoint[0], waypoint[1] = waypoint[1], -waypoint[0]
-                    case 180:
-                        waypoint[0], waypoint[1] = -waypoint[0], -waypoint[1]
-                    case 270:
-                        waypoint[0], waypoint[1] = -waypoint[1], waypoint[0]
-            case "L":
+                waypoint[0], waypoint[1] = waypoint[1], -waypoint[0]
+            case ("R", 180) | ("L", 180):
+                # flip waypoint to other side
+                waypoint[0], waypoint[1] = -waypoint[0], -waypoint[1]
+            case ("R", 270) | ("L", 90):
                 # rotate waypoint around ship counterclockwise
-                match num:
-                    case 90:
-                        waypoint[0], waypoint[1] = -waypoint[1], waypoint[0]
-                    case 180:
-                        waypoint[0], waypoint[1] = -waypoint[0], -waypoint[1]
-                    case 270:
-                        waypoint[0], waypoint[1] = waypoint[1], -waypoint[0]
-            case "F":
+                waypoint[0], waypoint[1] = -waypoint[1], waypoint[0]
+            case ("F", _):
                 position[0] += waypoint[0] * num
                 position[1] += waypoint[1] * num
 
